@@ -36,8 +36,17 @@
 	classificacao = classificarImcHomem(resultado);
 	
 	if (resultado >= 0) {
-		out.println("IMC: " + resultado);
-		out.print("Classificação: " + classificacao);
+		String saida = "";
+		saida = "IMC: " + resultado + ". Classificação: " + classificacao + ".";
+	%>
+		<script type="text/javascript">
+			window.onload = function() {
+				var mensagem = "<%=saida%>";
+				alert(mensagem);
+				document.Form.submit();
+			};
+		</script>
+	<%
 	}
 	%>
 	<%!
