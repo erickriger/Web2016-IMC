@@ -1,14 +1,34 @@
 <html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" />
+	<title>Cálculo de IMC</title>
+</head>
 <body>
-	<h2>Cálculo de Índice de Massa Corporal (IMC)</h2>
-	<form>
-		Altura (m): <input name="altura">
-		<br>
-		Peso (kg): <input name="peso">
-		<br>
-		<button>Calcular</button>
-	</form>
-	
+	<div class="well bs-component">
+		<form role="form" class="form-horizontal">
+			<fieldset>
+				<legend>Cálculo de Índice de Massa Corporal (IMC)</legend>
+				<div class="form-group">
+					<label for="altura" class="col-lg-1 control-label">Altura (m): </label>
+					<div class="col-lg-2">
+						<input type="text" class="form-control" id="altura" name="altura" placeholder="Altura">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="peso" class="col-lg-1 control-label">Peso (kg):	</label>
+					<div class="col-lg-2">
+						<input type="text" class="form-control" id="peso" name="peso" placeholder="Peso">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-10 col-lg-offset-1">
+						<button class="btn btn-primary">Calcular</button>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
 	<%
 	String alturaStr = "";
 	alturaStr = request.getParameter("altura");
@@ -30,22 +50,21 @@
 	}
 	
 	float resultado = 0;
-	resultado = calcularImc(altura, peso);
-	
 	String classificacao = "";
-	classificacao = classificarImcHomem(resultado);
+	String saida = "";
 	
-	if (resultado >= 0) {
-		String saida = "";
+	if (altura != 0 && peso != 0) {
+		resultado = calcularImc(altura, peso);
+		classificacao = classificarImcHomem(resultado);
 		saida = "IMC: " + resultado + ". Classificação: " + classificacao + ".";
 	%>
-		<script type="text/javascript">
+	<script type="text/javascript">
 			window.onload = function() {
 				var mensagem = "<%=saida%>";
-				alert(mensagem);
-				document.Form.submit();
-			};
-		</script>
+			alert(mensagem);
+			document.Form.submit();
+		};
+	</script>
 	<%
 	}
 	%>
@@ -84,6 +103,6 @@
 		return result;		
 	}	
 	%>
-	
+
 </body>
 </html>
